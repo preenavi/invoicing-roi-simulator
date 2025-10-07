@@ -1,0 +1,22 @@
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+const SCENARIOS_FILE = path.join(__dirname, 'scenarios.json');
+
+// Helper: read scenarios
+function readScenarios() {
+  if (!fs.existsSync(SCENARIOS_FILE)) return [];
+  const data = fs.readFileSync(SCENARIOS_FILE);
+  return JSON.parse(data);
+}
+
+// Helper: write scenarios
+function writeScenarios(scenarios) {
+  fs.writeFileSync(SCENARIOS_FILE, JSON.stringify(scenarios, null, 2));
+}
